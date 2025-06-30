@@ -4,7 +4,7 @@ from utils.password import verify_password
 
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
@@ -16,4 +16,5 @@ def login():
             return redirect(url_for('dashboard'))  # Replace with your dashboard route
         else:
             flash('Invalid email or password', 'danger')
-    return render_template('login.html') 
+    return render_template('login.html')
+
