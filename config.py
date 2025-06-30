@@ -1,2 +1,7 @@
-MONGO_URI = "mongodb+srv://ffsangam:FF%40sangam@cluster0.pbunrbm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-SECRET_KEY = "your_secret_key" 
+import os
+import secrets
+
+MONGO_URI = os.environ.get("MONGO_URI")
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev_default_secret")
+
+print(secrets.token_hex(24)) 
