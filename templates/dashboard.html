@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard | Coding Quiz Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/quiz_login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="right-panel" style="margin:auto;">
+            <div class="login-box">
+                <h2>Welcome, {{ rollno }}!</h2>
+                <a href="{{ url_for('auth.reset_password') }}" class="btn btn-warning mt-3">Reset Password</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary mt-3">Logout</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
