@@ -1,28 +1,312 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Login | Coding Quiz Portal</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/quiz_login.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 2rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .left-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+
+        .left-panel ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .left-panel li {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: calc(var(--i) * 0.3s);
+        }
+
+        .left-panel li:nth-child(1) { --i: 1; }
+        .left-panel li:nth-child(2) { --i: 2; }
+        .left-panel li:nth-child(3) { --i: 3; }
+        .left-panel li:nth-child(4) { --i: 4; }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            animation: slideInRight 1s ease-out;
+        }
+
+        /* Trophy Shape Login Box */
+        .login-box {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 3rem 2rem 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            animation: trophyFloat 3s ease-in-out infinite;
+        }
+
+        /* Trophy Cup */
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            border: 3px solid #d4af37;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Trophy Base */
+        .login-box::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 20px;
+            background: linear-gradient(45deg, #c0c0c0, #e6e6e6);
+            border-radius: 10px;
+            border: 2px solid #999;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Trophy Handles */
+        .trophy-handle {
+            position: absolute;
+            top: -20px;
+            width: 30px;
+            height: 40px;
+            border: 4px solid #d4af37;
+            border-radius: 50px;
+            background: transparent;
+        }
+
+        .trophy-handle.left {
+            left: -20px;
+            transform: rotate(-15deg);
+        }
+
+        .trophy-handle.right {
+            right: -20px;
+            transform: rotate(15deg);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        .form-control {
+            margin-bottom: 1.5rem;
+            border-radius: 25px;
+            border: 2px solid #ddd;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            transform: scale(1.02);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .alert {
+            border-radius: 15px;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 0.5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 1.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 2.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 3.5s; }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); }
+            75% { transform: rotate(2deg); }
+        }
+
+        @keyframes trophyFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideInLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .left-panel {
+                padding: 1rem;
+            }
+            
+            .left-panel h1 {
+                font-size: 2rem;
+            }
+            
+            .right-panel {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
     <div class="login-container">
         <div class="left-panel">
-            <h1>Welcome to Coding Quiz Portal</h1>
+            <h1>Vanakkam to FF Sangam 😎</h1>
             <ul>
-                <li>Practice coding challenges across various topics and levels.</li>
-                <li>Instant code execution and feedback.</li>
-                <li>Track your progress and improve your skills.</li>
-                <li>Modern, user-friendly interface for learning and fun.</li>
+                <li>Code like a Thala fan debugging in a TASMAC line 🍻💻</li>
+                <li>If you don't find bugs, check if your monitor is off 🤷‍♂️🖥️</li>
+                <li>Track your progress faster than Chennai traffic during bandh 🚗💨</li>
+                <li>Interface so smooth even Rajinikanth approves 🔥🕶️</li>
             </ul>
         </div>
         <div class="right-panel">
             <div class="login-box">
-                <h2>Login</h2>
+                <div class="trophy-handle left"></div>
+                <div class="trophy-handle right"></div>
+                <h2>🏆 LOGIN 🏆</h2>
                 <form method="POST">
-                    <input type="text" name="rollno" class="form-control" placeholder="Roll Number" required>
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
-                    <button class="btn btn-primary" type="submit">Login</button>
+                    <input type="text" name="rollno" class="form-control" placeholder="🎯 Roll Number" required>
+                    <input type="password" name="password" class="form-control" placeholder="🔐 Password" required>
+                    <button class="btn btn-primary" type="submit">🚀 ENTER THE ARENA</button>
                 </form>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                   {% if messages %}
@@ -37,4 +321,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>
