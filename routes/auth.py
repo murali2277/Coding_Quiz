@@ -112,3 +112,8 @@ def admin_set_first_login(rollno):
     flash(f'first_login set for {rollno}', 'success')
     return redirect(url_for('auth.admin_panel'))
 
+@auth_bp.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out successfully.', 'info')
+    return redirect(url_for('auth.login'))
